@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body class="bg-light text-dark">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <img src="img/logo.png" alt="Logo" id="logo" style="height: 40px;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto me-3 align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="cart.html" class="btn btn-outline-light ms-3 position-relative">
+            <i class="bi bi-cart3"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Product Section -->
+<section class="container my-5">
+  <div class="row align-items-center">
+    <!-- Product Image -->
+    <div class="col-lg-6 mb-4 mb-lg-0 text-center">
+      <img src="img/img5.png" class="img-fluid w-100 rounded shadow" alt="RTX 4060 Ti">
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-lg-6">
+      <h2 class="mb-3">NVIDIA GeForce RTX 4060 Ti</h2>
+      <p style="text-align: justify;">
+        The GeForce RTX 4060 Ti 8 GB is a high-end graphics card built on NVIDIA’s 5 nm Ada Lovelace architecture.
+        It features 4352 CUDA cores, 136 tensor cores, and 34 RT cores. With 8 GB GDDR6 memory on a 128-bit bus,
+        it delivers great performance for 1080p and 1440p gaming, and supports ray tracing and AI-accelerated features.
+        It operates with a boost clock of 2535 MHz and a power draw of 160W. Display outputs include 1x HDMI 2.1 and
+        3x DisplayPort 1.4a. The dual-slot design ensures compatibility with most modern builds.
+      </p>
+      <p class="fw-bold">Price: ₱100,000</p>
+      <button class="btn btn-success add-to-cart"
+      data-name="NVIDIA GeForce RTX 4060 Ti"
+              data-price="100000">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+  <hr class="border-secondary"/>
+  <p class="mb-0">&copy; 2025 GPU Shop. All rights reserved. NVIDIA and GeForce are registered trademarks of NVIDIA Corporation.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>
