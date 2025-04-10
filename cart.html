@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body class="bg-dark text-white">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <img src="img/logo.png" alt="" id="logo" />
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto me-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h2>Your Cart</h2>
+    <ul id="cart-items" class="list-group text-dark"></ul>
+    <div id="cart-total" class="mt-3 text-white"></div>
+    <div class="text-end me-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+        Checkout
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal (Confirm Items) -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content text-dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkoutModalLabel">Confirm Your Order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="cartSummary"></div>
+        <div class="modal-footer">
+          <button class="btn btn-success" id="confirmCheckout">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div class="modal fade" id="thankYouModal" tabindex="-1" aria-labelledby="thankYouModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content text-dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="thankYouModalLabel">Thank You!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <h5>Thank you for your purchase!</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Cart Script -->
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const list = document.getElementById("cart-items");
+    const total = document.getElementById("cart-total");
+    const cartSummary = document.getElementById("cartSummary");
+    const confirmCheckout = document.getElementById("confirmCheckout");
+
+    function renderCart() {
+      list.innerHTML = "";
+      let totalPrice = 0;
+
+      cart.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        li.innerHTML = `
+          <span>${item.name} - ₱${parseFloat(item.price).toLocaleString()}</span>
+          <button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Remove</button>
+        `;
+        list.appendChild(li);
+        totalPrice += parseFloat(item.price);
+      });
+
+      total.innerHTML = `<strong>Total:</strong> ₱${totalPrice.toLocaleString()}`;
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCart();
+    });
+
+    // Show cart summary when modal opens
+    document.getElementById('checkoutModal').addEventListener('show.bs.modal', () => {
+      if (cart.length === 0) {
+        cartSummary.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      let html = '<ul class="list-group mb-3">';
+      let total = 0;
+
+      cart.forEach(item => {
+        const price = parseFloat(item.price);
+        total += price;
+        html += `<li class="list-group-item d-flex justify-content-between">
+          <span>${item.name}</span><strong>₱${price.toLocaleString()}</strong>
+        </li>`;
+      });
+
+      html += `</ul><p class="text-end fw-bold">Total: ₱${total.toLocaleString()}</p>`;
+      cartSummary.innerHTML = html;
+    });
+
+    // On confirm checkout
+    confirmCheckout.addEventListener('click', () => {
+      // Hide the confirmation modal
+      const checkoutModalInstance = bootstrap.Modal.getInstance(document.getElementById("checkoutModal"));
+      checkoutModalInstance.hide();
+
+      // Show Thank You modal
+      const thankYouModal = new bootstrap.Modal(document.getElementById("thankYouModal"));
+      thankYouModal.show();
+
+      // Clear cart
+      localStorage.removeItem("cart");
+      cart = [];
+      renderCart();
+    });
+  </script>
+</body>
+</html>
